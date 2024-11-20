@@ -33,6 +33,16 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    public void ChangeState(GameObject target)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject gameObject = transform.GetChild(i).gameObject;
+
+            gameObject.SetActive(gameObject == target);
+        }
+    }
+
     public T GetState<T>() where T : MonoBehaviour
     {
         return GetComponentInChildren<T>(true);

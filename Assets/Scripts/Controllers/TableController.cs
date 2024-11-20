@@ -24,6 +24,8 @@ public class TableController : MonoBehaviour
 
     void Update()
     {
+        float interactionDistance = CameraManager._inst.CurrentArea.InteractionDistance;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (_picked == null)
@@ -31,7 +33,7 @@ public class TableController : MonoBehaviour
 
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                if (Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, _pickableLayer))
+                if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, _pickableLayer))
                 {
                     _picked = hit.rigidbody;
                     _picked.isKinematic = true;
@@ -43,11 +45,11 @@ public class TableController : MonoBehaviour
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                if (Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, _pickableLayer))
+                if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, _pickableLayer))
                 {
                     Interactable interactable = hit.rigidbody.gameObject.GetComponent<Interactable>();
 
-                    if(interactable != null)
+                    if(interactable != null && interactable.gameObject != _picked)
                     {
                         interactable.Interact(_picked.gameObject);
                     }
@@ -69,7 +71,7 @@ public class TableController : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, _tableLayer))
+            if (Physics.Raycast(ray, out RaycastHit hit, interactionDistance, _tableLayer))
                 _target = hit.point + Vector3.up * _elevate;
 
             _picked.MovePosition(Vector3.Lerp(_picked.position, _target, Time.fixedDeltaTime * _positionLerp));
@@ -86,7 +88,8 @@ public class TableController : MonoBehaviour
 
     void OnEnable()
     {
-        CameraManager._inst.SetPivot(pivot);
+        CameraManager._inst.ResetPivot();
+        CameraManager._inst.CanPickArea = _picked == null;
 
         if(_picked != null) Pick(_picked.gameObject);
     }
@@ -97,6 +100,8 @@ public class TableController : MonoBehaviour
 
     private void Pick(GameObject pickable)
     {
+        CameraManager._inst.CanPickArea = false;
+
         Actions actions = pickable.GetComponent<Actions>();
 
         if (actions != null)
@@ -105,6 +110,8 @@ public class TableController : MonoBehaviour
 
     private void Drop(GameObject pickable)
     {
+        CameraManager._inst.CanPickArea = true;
+
         ActionManager._inst.Hide();
     }
 }
