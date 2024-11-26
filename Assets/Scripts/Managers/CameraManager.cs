@@ -41,6 +41,8 @@ public class CameraManager : MonoBehaviour
 
     private float _transitionTimer;
 
+    private Quaternion _starterRotation;
+
     void Awake()
     {
         _inst = this;
@@ -69,7 +71,7 @@ public class CameraManager : MonoBehaviour
         if (_cameraMode == CameraMode.Orbit)
         {
             _target.localPosition = -Vector3.forward * _zoom;
-            transform.localEulerAngles = new Vector3(_cameraY, _cameraX, 0f) * 50f;
+            transform.rotation = _starterRotation * Quaternion.Euler(_cameraY * 50f, _cameraX * 50f, 0f);
         }
         else
         {
@@ -126,6 +128,8 @@ public class CameraManager : MonoBehaviour
         CurrentPivot = pivot;
         transform.position = pivot.position;
         transform.rotation = pivot.rotation;
+
+        _starterRotation = pivot.rotation;
     }
 
     public void ResetPivot()
