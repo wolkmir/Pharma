@@ -18,7 +18,7 @@ public class StateManager : MonoBehaviour
 
     void Start()
     {
-        ChangeState<TableController>();
+        ChangeState<MovementController>();
     }
 
     public void ChangeState<T>() where T : MonoBehaviour

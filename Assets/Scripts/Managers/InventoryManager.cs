@@ -44,10 +44,12 @@ public class InventoryManager : MonoBehaviour
 
     public void Drop(int slot, Vector2 mousePosition)
     {
+        float interactionDistance = CameraManager._inst.InteractionDistance;
+
         if (_itemBoxes[slot].childCount == 0) return;
 
         Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-        if (!Physics.Raycast(ray, out RaycastHit hit, CameraManager._inst.CurrentArea.InteractionDistance)) return;
+        if (!Physics.Raycast(ray, out RaycastHit hit, interactionDistance)) return;
 
         Vector3 target = hit.point + Vector3.up * 0.2f;
 
