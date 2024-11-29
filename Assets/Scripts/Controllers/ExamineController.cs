@@ -27,8 +27,8 @@ public class ExamineController : MonoBehaviour
         _oldPosition = pickable.transform.position;
         pickable.transform.position = _pivot.position;
 
-        CameraManager._inst.SetPivot(_pivot);
-        CameraManager._inst.CanPickArea = false;
+        // CameraManager._inst.SetPivot(_pivot);
+        // CameraManager._inst.CanPickArea = false;
     }
 
     void OnDisable()

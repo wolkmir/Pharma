@@ -25,7 +25,7 @@ public class TableController : MonoBehaviour
 
     void Update()
     {
-        float interactionDistance = CameraManager._inst.CurrentArea.InteractionDistance;
+        float interactionDistance = CameraManager._inst.InteractionDistance;
 
         // поднятие/опускание предмета
         if (InputHandler.GetMouseButtonDown(0) && _picked == null)
@@ -85,6 +85,10 @@ public class TableController : MonoBehaviour
 
             _picked.MovePosition(Vector3.Lerp(_picked.position, _target, Time.fixedDeltaTime * _positionLerp));
         }
+
+
+        //
+        if(Input.GetKeyDown(KeyCode.Escape)) StateManager._inst.GetState<MovementController>().ExitTarget();
     }
 
     void FixedUpdate()
@@ -97,8 +101,8 @@ public class TableController : MonoBehaviour
 
     void OnEnable()
     {
-        CameraManager._inst.ResetPivot();
-        CameraManager._inst.CanPickArea = _picked == null;
+        // CameraManager._inst.ResetPivot();
+        // CameraManager._inst.CanPickArea = _picked == null;
 
         if (_picked != null) Pick(_picked.gameObject);
     }
@@ -109,7 +113,7 @@ public class TableController : MonoBehaviour
 
     private void Pick(GameObject pickable)
     {
-        CameraManager._inst.CanPickArea = false;
+        // CameraManager._inst.CanPickArea = false;
 
         Actions actions = pickable.GetComponent<Actions>();
 
@@ -121,7 +125,7 @@ public class TableController : MonoBehaviour
 
     private void Drop(GameObject pickable)
     {
-        CameraManager._inst.CanPickArea = true;
+        // CameraManager._inst.CanPickArea = true;
 
         ActionManager._inst.Hide();
 

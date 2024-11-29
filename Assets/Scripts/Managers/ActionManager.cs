@@ -28,7 +28,7 @@ public class ActionManager : MonoBehaviour
 
     void Update()
     {
-        float interactionDistance = CameraManager._inst.CurrentArea.InteractionDistance;
+        float interactionDistance = CameraManager._inst.InteractionDistance;
 
         // if (_currentProfile == null) return;
 

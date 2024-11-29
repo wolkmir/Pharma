@@ -15,6 +15,6 @@ public class GrindAction : Action
         mortarController.MortarVisual = mortarVisual;
 
         StateManager._inst.ChangeState<MortarController>();
-        CameraManager._inst.SetPivot(pickable.transform);
+        // CameraManager._inst.SetPivot(pickable.transform);
     }
 }

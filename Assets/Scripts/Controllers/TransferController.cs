@@ -87,8 +87,8 @@ public class TransferController : MonoBehaviour
 
     void OnEnable()
     {
-        CameraManager._inst.SetPivot(interactable.transform);
-        CameraManager._inst.CanPickArea = false;
+        // CameraManager._inst.SetPivot(interactable.transform);
+        // CameraManager._inst.CanPickArea = false;
 
         _timer = -_transferDelay;
 
